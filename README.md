@@ -1,4 +1,4 @@
-# Interactive 3D Portfolio 🚀
+# Interactive 3D Portfolio 
 
 Welcome to my interactive web portfolio! This project is a responsive Single Page Application (SPA) designed to showcase technical skills, interactive projects, and a custom 3D environment in a fluid and visually engaging layout.
 
