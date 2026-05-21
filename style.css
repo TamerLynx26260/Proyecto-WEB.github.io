@@ -1,71 +1,328 @@
+/* =========================================
+   1. VARIABLES Y TEMAS
+   ========================================= */
 :root {
-    --primary-purple: #b39ddb; /* Lavanda agradable */
+    --bg-color: #f3e5f5;
+    --card-bg: #ffffff;
+    --text-main: #333333;
+    --sidebar-bg: rgba(255, 255, 255, 0.4);
+    --primary-purple: #b39ddb;
     --text-purple: #7e57c2;
     --bg-gradient: linear-gradient(135deg, #f3e5f5 0%, #e1f5fe 100%);
 }
 
-body { margin: 0; background: var(--bg-gradient); font-family: 'Segoe UI', sans-serif; }
+[data-theme="dark"] {
+    --bg-color: #121212;
+    --card-bg: #1e1e1e;
+    --text-main: #e0e0e0;
+    --sidebar-bg: rgba(0, 0, 0, 0.7);
+    --primary-purple: #7e57c2;
+    --text-purple: #b39ddb;
+}
 
-.main-container { display: flex; width: 100vw; height: 100vh; }
+/* =========================================
+   2. ESTILOS BASE
+   ========================================= */
+body, html { 
+    margin: 0; 
+    padding: 0; 
+    width: 100%; 
+    height: 100%;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden; 
+    transition: background-color 0.3s, color 0.3s;
+}
 
-#room-model { flex: 1; height: 100%; }
+.main-container { 
+    display: flex; 
+    width: 100vw; 
+    height: 100vh; 
+}
 
+#room-model { 
+    flex: 1; 
+    height: 100%; 
+    outline: none; 
+    display: block;
+}
+
+/* =========================================
+   3. SIDEBAR Y TARJETAS
+   ========================================= */
 .info-sidebar {
-    width: 380px;
-    padding: 30px;
-    background: rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(20px);
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
+    width: 380px; 
+    padding: 25px;
+    background: var(--sidebar-bg);
+    backdrop-filter: blur(15px);
+    display: flex; 
+    flex-direction: column; 
+    gap: 20px;
+    box-sizing: border-box; 
+    overflow-y: auto;
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .card {
-    background: white;
-    padding: 25px;
-    border-radius: 30px;
-    box-shadow: 0 10px 25px rgba(126, 87, 194, 0.1);
+    background: var(--card-bg);
+    padding: 20px; 
+    border-radius: 25px;
+    box-shadow: 0 8px 20px rgba(126, 87, 194, 0.1);
+    color: var(--text-main);
+    transition: background-color 0.3s;
 }
 
-.card h3 { color: var(--text-purple); margin: 0 0 10px 0; }
-.user-name { font-weight: bold; color: #555; margin-bottom: 15px; }
+.card h3 { 
+    color: var(--text-purple); 
+    margin: 0 0 10px 0; 
+    font-size: 1.2rem; 
+}
 
-/* Iconos de contacto circulares de la foto */
-.social-icons { display: flex; gap: 20px; }
-.circle-icon {
-    width: 50px;
-    height: 50px;
-    background: var(--primary-purple);
-    border-radius: 50%;
+.avatar-container {
     display: flex;
-    align-items: center;
     justify-content: center;
-    transition: 0.3s;
+    margin-bottom: 10px;
 }
-.circle-icon img { width: 25px; filter: brightness(0) invert(1); }
-.circle-icon:hover { transform: scale(1.1); }
 
-/* Reproductor de música y Reset estilo image_72b33c */
-.music-player, .reset-btn {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    color: #666;
+.avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid var(--primary-purple);
+    background: #eee;
+    object-fit: cover;
+}
+
+.skills-list {
+    list-style: none;
+    padding: 0;
     font-size: 0.9rem;
-    cursor: pointer;
 }
 
-.play-circle, .camera-icon-wrapper {
-    width: 45px;
-    height: 45px;
-    background: var(--primary-purple);
-    border-radius: 50%;
+.accordion-btn {
+    width: 100%; 
+    background: var(--primary-purple); 
+    color: white;
+    border: none; 
+    padding: 10px 15px; 
+    border-radius: 15px;
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    gap: 10px;
+    font-weight: bold; 
+    margin-bottom: 5px;
+}
+
+.accordion-content {
+    max-height: 0; 
+    overflow: hidden; 
+    transition: max-height 0.3s ease-out;
+    font-size: 0.85rem; 
+    padding: 0 10px;
+}
+
+.accordion-item.active .accordion-content {
+    max-height: fit-content; 
+    padding: 10px;
+}
+
+/* =========================================
+   4. INTERACTIVIDAD Y UI
+   ========================================= */
+
+.reset-btn {
+    background: var(--card-bg);
+    color: var(--text-main);
+    border: 1px solid var(--primary-purple);
+    padding: 10px 15px;
+    border-radius: 12px;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 10px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    width: fit-content;
+    margin-top: 15px;
+}
+
+.reset-btn:hover {
+    background: var(--primary-purple);
     color: white;
 }
 
-.camera-icon-wrapper img { width: 22px; filter: brightness(0) invert(1); }
+/* REPRODUCTOR DE MÚSICA */
+.music-player {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: var(--card-bg);
+    border-radius: 20px;
+    transition: background-color 0.3s;
+    margin-bottom: 10px;
+}
 
-.reset-btn { background: none; border: none; padding: 0; font-family: inherit; }
+.music-btn-wrapper {
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.play-circle {
+    width: 45px; height: 45px; 
+    background: var(--primary-purple);
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    color: white; 
+    border: none;
+}
+
+.music-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.music-info p { 
+    margin: 0; 
+    font-size: 1rem; 
+    font-weight: bold; 
+    color: var(--text-main); 
+}
+
+/* Fila de controles para alinear iconos y barras */
+.control-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-main);
+    min-height: 24px;
+}
+
+input[type="range"] {
+    flex: 1;
+    cursor: pointer;
+    accent-color: var(--primary-purple);
+}
+
+.social-icons { display: flex; gap: 15px; margin-top: 10px; }
+.circle-icon {
+    width: 45px; height: 45px; 
+    background: var(--primary-purple);
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    transition: transform 0.2s;
+}
+.circle-icon img { width: 22px; filter: brightness(0) invert(1); }
+.circle-icon:hover { transform: scale(1.1); }
+
+/* =========================================
+   5. DISEÑO RESPONSIVO (MÓVIL)
+   ========================================= */
+@media (max-width: 768px) {
+    body, html { overflow-y: auto; }
+    .main-container { flex-direction: column; height: auto; }
+    #room-model { 
+        flex: none; width: 100%; height: 400px !important; 
+        min-height: 400px; display: block !important;
+    }
+    .info-sidebar { 
+        width: 100%; height: auto; padding: 20px;
+        border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.3);
+    }
+}
+
+/* =========================================
+   SECCIÓN DE TRABAJOS (REEMPLAZO TOTAL)
+   ========================================= */
+.works-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.project-item {
+    border: 2px solid var(--primary-purple);
+    border-radius: 20px;
+    padding: 10px; 
+    background-color: var(--card-bg);
+}
+
+/* Forzamos al contenedor a ser grande */
+.video-container.large-video {
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 2px solid var(--primary-purple);
+    background: #000;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    aspect-ratio: 16 / 9; /* Esto le da la forma de pantalla de cine */
+}
+
+.video-container.large-video video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    display: block;
+}
+
+/* CRÍTICO: Esto es lo que permite que el video se estire */
+.accordion-item.active .accordion-content {
+    max-height: 2000px !important; /* Aumentado drásticamente */
+    padding: 15px 0;
+    opacity: 1;
+    transition: max-height 0.8s ease-in-out;
+}
+
+:root {
+    /* ... tus otras variables ... */
+    --particle-color: #7e57c2; /* Morado intenso para modo claro */
+}
+
+[data-theme="dark"] {
+    /* ... tus otras variables ... */
+    --particle-color: #b39ddb; /* Morado claro/brillante para modo oscuro */
+}
+
+#particles-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    bottom: -20px;
+    border-radius: 50%;
+    /* Usamos la variable para que cambie sola con el tema */
+    background-color: var(--particle-color); 
+    opacity: 0.4;
+    filter: blur(1px);
+    /* El brillo también se adapta al color del tema */
+    box-shadow: 0 0 10px var(--particle-color); 
+    animation: floatUp linear infinite;
+    will-change: transform; /* Optimización de rendimiento */
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0) scale(0); opacity: 0; }
+    20% { opacity: 0.4; }
+    100% { transform: translateY(-110vh) scale(1.2); opacity: 0; }
+}
