@@ -38,14 +38,16 @@ A fully custom media layout embedded directly into the sidebar flow. It features
 
 ```text
 ├── assets/
-│   ├── 3d/
-│   │   └── Practica2.glb       # Environment 3D model asset
-│   ├── Avatar.jpeg             # Author's profile photo
-│   ├── Cicada.mp3              # Background audio loop file
-│   └── Rive.mp4                # Bear animation preview video
-├── index.html                  # Main document structure
-├── main.js                     # Interaction layer, particle engine, and theme toggles
-└── style.css                   # Global stylesheets and theme variables
+│   └── 3d/
+│       └── Practica2.glb               # Environment 3D model asset (Optimized)
+├── Avatar.jpeg                         # Author's profile photo
+├── Cicada.mp3                          # Background audio loop file
+├── index.html                          # Main document structure
+├── main.js                             # Interaction layer, particle engine, and theme toggles
+├── Practica_Carlos_Morales.blend       # Blender 5.1 original source file
+├── README.md                           # Project documentation
+├── Rive.mp4                            # Bear animation preview video
+└── style.css                           # Global stylesheets and theme variables
 
 👨‍💻 Author
 Carlos Morales - Computer Systems Engineering Student - TecNM
